@@ -1,0 +1,5 @@
+sceneSetups:
+- path: Assets/Scenes/blockchain_data_visualizer.unity
+  isLoaded: 1
+  isActive: 1
+  isSubScene: 0
