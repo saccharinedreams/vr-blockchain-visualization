@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using NativeWebSocket;
+using TMPro;
 
 [Serializable]
 public class TransactionData
@@ -43,6 +44,7 @@ public class Output
 public class BlockchainVisualizer : MonoBehaviour
 {
     private WebSocket ws;
+    public TMP_Text dataText;
 
     async void Start()
     {
@@ -66,27 +68,18 @@ public class BlockchainVisualizer : MonoBehaviour
 
         ws.OnMessage += (bytes) =>
         {
-            //Debug.Log("OnMessage!");
-            //Debug.Log(bytes);
-
             // getting the message as a string
             var message = System.Text.Encoding.UTF8.GetString(bytes);
             Debug.Log("OnMessage: " + message);
-            var data = JsonUtility.FromJson<TransactionData>(message);
+            TransactionData data = JsonUtility.FromJson<TransactionData>(message);
             if (data.op == "utx")
             {
-                Debug.Log("Hash, previous address, output address, value:");
-                Debug.Log(data.x.hash);
-                Debug.Log(data.x.inputs[0].prev_out.addr);
-                Debug.Log(data.x.@out[0].addr);
-                Debug.Log(data.x.@out[0].value);
-
                 var transactionData = $"Transaction Hash: {data.x.hash}\n" +
                                       $"From: {data.x.inputs[0].prev_out.addr}\n" +
                                       $"To: {data.x.@out[0].addr}\n" +
                                       $"Value: {data.x.@out[0].value / 100000000.0:F8} BTC";
 
-                //dataText.text = transactionData;
+                dataText.text = transactionData;
             }
             
         };
@@ -119,5 +112,14 @@ public class BlockchainVisualizer : MonoBehaviour
     private async void OnApplicationQuit()
     {
         await ws.Close();
+    }
+
+    private void debugBlockchainData(TransactionData data)
+    {
+        Debug.Log("Hash, previous address, output address, value:");
+        Debug.Log(data.x.hash);
+        Debug.Log(data.x.inputs[0].prev_out.addr);
+        Debug.Log(data.x.@out[0].addr);
+        Debug.Log(data.x.@out[0].value);
     }
 }
