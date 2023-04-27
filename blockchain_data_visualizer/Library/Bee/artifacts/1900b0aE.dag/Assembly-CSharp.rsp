@@ -349,6 +349,9 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
 "Assets/Scripts/BlockchainVisualizer.cs"
+"Assets/Scripts/CustomGradient.cs"
+"Assets/Scripts/TransactionAnimation.cs"
+"Assets/Scripts/TransactionData.cs"
 -langversion:9.0
 
 /deterministic
