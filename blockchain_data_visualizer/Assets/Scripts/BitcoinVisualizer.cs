@@ -32,7 +32,7 @@ public class BitcoinVisualizer : MonoBehaviour
         conversion_to_usd = getConversionRate(reader);
         gradient = new CustomGradient();
         btc_spheres = new TransactionSphere();
-        btc_pos = new Vector3(-70f, -10f, 0f);
+        btc_pos = new Vector3(-70f, -10f, 10f);
         ws.OnOpen += () =>
         {
             UnityEngine.Debug.Log("Connection open!");

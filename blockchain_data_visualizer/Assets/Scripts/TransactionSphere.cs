@@ -9,8 +9,6 @@ public class TransactionSphere
         sphere.transform.position = pos;
         sphere.transform.localScale = new Vector3(sphereSize, sphereSize, sphereSize);
         sphere.GetComponent<Renderer>().material.color = sphereColor;
-        //Rigidbody sphereRigidbody = sphere.AddComponent<Rigidbody>();
-        //sphereRigidbody.useGravity = false;
         SphereMovement sphereMovement = sphere.AddComponent<SphereMovement>();
     }
     

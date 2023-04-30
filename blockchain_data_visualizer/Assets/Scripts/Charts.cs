@@ -10,8 +10,10 @@ public class Charts : MonoBehaviour
     private GameObject historicalCharts;
     SpriteRenderer spriteRenderer;
     Texture2D texture;
-    private Vector3 SCALE = new Vector3(9f, 9f, 9f);
-    private Vector3 POS = new Vector3(0f, 0f, 0f);
+    private Vector3 SCALE = new Vector3(10f, 10f, 10f);
+    private Vector3 POS = new Vector3(0f, 0f, -1f);
+    public GameObject cover;
+    private bool chartsActive = false;
 
     private void Start(){
         cryptos = new string[] {"BTC", "ETH", "MATIC", "SOL"};
@@ -28,31 +30,26 @@ public class Charts : MonoBehaviour
 
     void Update()
     {
-        if (UnityEngine.Input.GetKeyDown("b") )
+        if (UnityEngine.Input.GetKeyDown("1") || UnityEngine.Input.GetKeyDown("2") || UnityEngine.Input.GetKeyDown("3") || UnityEngine.Input.GetKeyDown("4"))
         {   
-            if(candlestickCharts[0].activeSelf) candlestickCharts[0].SetActive(false);
-            else candlestickCharts[0].SetActive(true);
-        }
-        else if (UnityEngine.Input.GetKeyDown("e") )
-        {   
-            if(candlestickCharts[1].activeSelf) candlestickCharts[1].SetActive(false);
-            else candlestickCharts[1].SetActive(true);
-        }
-        else if (UnityEngine.Input.GetKeyDown("m") )
-        {   
-            if(candlestickCharts[2].activeSelf) candlestickCharts[2].SetActive(false);
-            else candlestickCharts[2].SetActive(true);
-        }
-        else if (UnityEngine.Input.GetKeyDown("s") )
-        {   
-            if(candlestickCharts[3].activeSelf) candlestickCharts[3].SetActive(false);
-            else candlestickCharts[3].SetActive(true);
+            int inputChar = int.Parse(UnityEngine.Input.inputString)-1;
+            candlestickCharts[inputChar].SetActive(!candlestickCharts[inputChar].activeSelf);
+            
         }
         else if(UnityEngine.Input.GetKeyDown("space")){
-            if(historicalCharts.activeSelf) historicalCharts.SetActive(false);
-            else historicalCharts.SetActive(true);
+            historicalCharts.SetActive(!historicalCharts.activeSelf);
         }
+        chartsActive = false;
+        foreach(GameObject obj in candlestickCharts){
+            if(obj.activeSelf) {
+                chartsActive = true;
+                break;
+            }
+        }
+        if(historicalCharts.activeSelf) chartsActive = true;
+        cover.SetActive(chartsActive);
     }
+
 
     private void setupChart(GameObject chart, string fileName){
         spriteRenderer = chart.AddComponent<SpriteRenderer>();
@@ -63,13 +60,6 @@ public class Charts : MonoBehaviour
         chart.transform.position = POS;
         chart.SetActive(false);
     }
-    // private void onEnable(){
-    //     playerControls.Enable();
-    // }
-
-    // private void onDisable(){
-    //     playerControls.Disable();
-    // }
 
     /*private void runPythonScript(string scriptName)
     {
