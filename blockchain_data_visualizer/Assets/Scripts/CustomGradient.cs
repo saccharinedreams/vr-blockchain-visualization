@@ -7,25 +7,17 @@ public class CustomGradient {
 
     public Color Evaluate(float volume)
     {
-        Color color = Color.red;
-        if (volume > 0.5f) color = Color.green;
-        else if (volume > 0.2f) color = Color.Lerp(Color.red, Color.green, 0.75f);
-        else if (volume > 0.05f) color = Color.Lerp(Color.red, Color.green, 0.5f);
-        return color;
+        if (volume > 1000f) return Color.green;
+        else if (volume > 100f) return Color.Lerp(Color.red, Color.green, 0.75f);
+        else if (volume > 10f) return Color.Lerp(Color.red, Color.green, 0.5f);
+        else return Color.red;
     }
 
     // This function updates the texture based on the current transaction volumes
-    public void UpdateHeatMapTexture(Texture2D heatMapTexture, List<float> transactionVolumes)
+    public void UpdateHeatMapTexture(Texture2D heatMapTexture, float transactionVolume)
     {
         // Normalize the transaction volumes to a range of 0 to 1
-        float maxVolume = Mathf.Max(transactionVolumes.ToArray());
-        for (int i = 0; i < transactionVolumes.Count; i++)
-        {
-            transactionVolumes[i] /= maxVolume;
-        }
-
-        float volume = transactionVolumes.Last();
-        Color color = Evaluate(volume);
+        Color color = Evaluate(transactionVolume);
       
         // Update the color values of the pixels in the texture
         for (int y = 0; y < heatMapTexture.height; y++)
